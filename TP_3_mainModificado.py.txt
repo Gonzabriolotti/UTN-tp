@@ -1,0 +1,36 @@
+from TP_3_Modificado import *
+
+def principal():
+    print('Bienvenido!\n\n')
+    selec = -1
+    while selec != 0:
+        selec = menu()
+
+        if selec == 1:
+            vector = []
+            m = open("peajes-tp3.txt","r")
+            linea = m.readline()
+
+            while True:
+                linea = m.readline()
+                if linea == "":
+                    break
+                procesar_linea(linea,vector)
+
+        elif selec == 3:
+            ordenar_por_id(vector)
+
+
+
+
+
+
+
+
+
+
+
+
+
+if __name__ == '__main__':
+    principal()

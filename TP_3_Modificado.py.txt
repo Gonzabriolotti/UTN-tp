@@ -1,0 +1,105 @@
+class Ticket:
+    def __init__(self, id, pat,  tp, fp, ps, dist):
+        self.identificacion = id
+        self.patente = pat
+        self.tipo = tp
+        self.pago = fp
+        self.pais = ps
+        self.distancia = dist
+
+    def __str__(self):
+        res = '\n Id: '+ str(Ticket.identificacion)
+        res += '- Patente: '+ str(Ticket.patente)
+        res += '- Tipo: '+ str(Ticket.tipo)
+        res += '- Pago: '+ str(Ticket.pago)
+        res += '- Pais: '+ str(Ticket.pais)
+        res += '- Distancia: '+ str(Ticket.distancia)
+        return res
+
+def menu():
+        print('1: Crear un arreglo de registros con tickets guardados')
+        print('2: Cargar datos de nuevo ticket')
+        print('3: Mostrar todos los tickets')
+        print('4: Buscar una patente existente')
+        print('5: Cambiar forma de pago de un vehiculo')
+        print('6: Mostrar cantidad de vehiculos que pasaron por una cabina')
+        print('7: Importe pagado por vehiculo')
+        print('8: Mostrar vehiculo con mayor monto, y porcentaje del total')
+        print('9: Calcular y mostrar la distancia promedio desde la última cabina')
+        selec = int(input('Elija entre las siguientes opciones:\n'))
+        return selec
+
+def cargar_vector(n):
+    v = []
+    for i in range(n):
+        id = int(input('Ingrese un codigo de identificacion de 10 digitos: '))
+        pat = input('Ingrese la patente del vehiculo: ')
+        tp = int(input('Ingrese tipo de vehiculo: '))
+        fp = int(input('Ingrese forma de pago: '))
+        ps = int(input('Ingrese pais de cabina: '))
+        dist = int(input('Ingrese distancia del vehiculo: '))
+        v.append(Ticket(id, pat,  tp, fp, ps, dist))
+
+def procesar_linea (linea,v):
+    id = linea [0:10]
+    pat = linea [10:17]
+    tp = linea [17:18]
+    fp = linea [18:19]
+    ps = linea [19:20]
+    dist = int (linea [20:23])
+    #return Ticket(id,pat,tp,fp,ps,dist)
+    v.append(Ticket(id, pat,  tp, fp, ps, dist))
+
+def ordenar_por_id(v):
+    n = len(v)
+    for i in range(n-1):
+        for j in range(i + 1, n):
+            if v[i].identificacion > v[j].identificacion:
+                v[i],v[j] = v[j],v[i]
+
+    for i in range(len(v)):
+        res = '\n Id: '+ str(v[i].identificacion)
+        res += '- Patente: '+ str(v[i].patente)
+        patente = v[i].patente
+        Origen = procesar_patentes(patente)
+        res += '- Origen: '+ str(Origen)
+        res += '- Tipo: '+ str(v[i].tipo)
+        res += '- Pago: '+ str(v[i].pago)
+        res += '- Pais: '+ str(v[i].pais)
+        res += '- Distancia: '+ str(v[i].distancia)
+        print(res)
+
+
+
+def procesar_patentes(patente):
+    letras = ("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
+    numeros = ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
+    vacio = (" ")
+
+    if (patente[0] in letras and patente[1] in letras and patente[2] in numeros and patente[3] in numeros and patente[4] in numeros and patente[5] in letras and patente[6] in letras):
+        Origen = "Argentina"
+        return Origen
+
+    elif (patente[0] in letras and patente[1] in letras and patente[2] in letras and patente[3] in numeros and patente[4] in letras and patente[5] in numeros and patente[6] in numeros):
+        Origen = "Brasil"
+        return Origen
+
+    elif(patente[0] in letras and patente[1] in letras and patente[2] in numeros and patente[3] in numeros and patente[4] in numeros and patente[5] in numeros and patente[6] in numeros):
+        Origen = "Bolivia"
+        return Origen
+
+    elif(patente[0] in letras and patente[1] in letras and patente[2] in letras and patente[3] in letras and patente[4] in numeros and patente[5] in numeros and patente[6] in numeros):
+        Origen = "Paraguay"
+        return Origen
+
+    elif(patente[0] in letras and patente[1] in letras and patente[2] in letras and patente[3] in numeros and patente[4] in numeros and patente[5] in numeros and patente[6] in numeros):
+        Origen = "Uruguay"
+        return Origen
+
+    elif(patente[0] in vacio and patente[1] in letras and patente[2] in letras and patente[3] in letras and patente[4] in letras and patente[5] in numeros and patente[6] in numeros):
+        Origen = "Chile"
+        return Origen
+
+    else:
+        Origen = "Otro"
+        return Origen
